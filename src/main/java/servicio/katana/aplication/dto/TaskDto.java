@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 /**
  * DTO for {@link servicio.katana.domain.entities.Task}
  */
+
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

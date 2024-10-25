@@ -18,8 +18,8 @@ import servicio.katana.aplication.ports.outbound.ITaskRead;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/tickets")
-public class TicketController {
+@RequestMapping("/api/task")
+public class TaskController {
 
     private final ITaskCreate taskCreator;
     private final ITaskUpdate taskUpdater;
@@ -27,7 +27,7 @@ public class TicketController {
     private final ITaskRead taskReader;
 
     @Autowired
-    public TicketController(ITaskCreate taskCreator, ITaskUpdate taskUpdater, ITaskDelete taskDeleter, ITaskRead taskReader) {
+    public TaskController(ITaskCreate taskCreator, ITaskUpdate taskUpdater, ITaskDelete taskDeleter, ITaskRead taskReader) {
         this.taskCreator = taskCreator;
         this.taskUpdater = taskUpdater;
         this.taskDeleter = taskDeleter;
