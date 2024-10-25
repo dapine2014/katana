@@ -8,6 +8,6 @@ import servicio.katana.aplication.dto.TaskDto;
 import java.util.Optional;
 
 public interface ITaskEventService {
-   Page<TaskDto> getAllTickets(Pageable pageable);
-   Optional<TaskDto> findTicketById(Long id);
+   Page<TaskDto> getAllTasks(Pageable pageable);
+   Optional<TaskDto> findTasksById(Long id);
 }

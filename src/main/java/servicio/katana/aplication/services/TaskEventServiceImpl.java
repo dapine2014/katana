@@ -5,34 +5,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import servicio.ticket.aplication.dto.TicketDto;
-import servicio.ticket.domain.entities.Ticket;
-import servicio.ticket.domain.repositories.TicketRepository;
-import servicio.ticket.domain.services.ITicketEventService;
+import servicio.katana.aplication.dto.TaskDto;
+import servicio.katana.domain.entities.Task;
+import servicio.katana.domain.repositories.TaskRepository;
+import servicio.katana.domain.services.ITaskEventService;
+
 import java.util.Optional;
 
 @Service
-public class TaskEventServiceImpl implements ITicketEventService {
+public class TaskEventServiceImpl implements ITaskEventService {
 
-    private final TicketRepository ticketRepository;
+    private final TaskRepository ticketRepository;
     private final ModelMapper mapper;
 
     @Autowired
-    public TaskEventServiceImpl(TicketRepository ticketRepository) {
+    public TaskEventServiceImpl(TaskRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
         this.mapper = new ModelMapper();
     }
 
 
     @Override
-    public Page<TicketDto> getAllTickets(Pageable pageable) {
+    public Page<TaskDto> getAllTasks(Pageable pageable) {
 
-        Page<Ticket> tickets = ticketRepository.findAll(pageable);
-        return tickets.map(ticket -> mapper.map(ticket, TicketDto.class));
+        Page<Task> Tasks = ticketRepository.findAll(pageable);
+        return Tasks.map(task -> mapper.map(task, TaskDto.class));
     }
 
     @Override
-    public Optional<TicketDto> findTicketById(Long id) {
-        return Optional.of(mapper.map(ticketRepository.findById(id), TicketDto.class));
+    public Optional<TaskDto> findTasksById(Long id) {
+        return Optional.of(mapper.map(ticketRepository.findById(id), TaskDto.class));
     }
+
 }

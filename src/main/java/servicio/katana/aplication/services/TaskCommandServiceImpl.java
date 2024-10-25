@@ -1,57 +1,59 @@
 package servicio.katana.aplication.services;
 
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import servicio.ticket.aplication.dto.TicketDto;
-import servicio.ticket.domain.entities.Ticket;
-import servicio.ticket.domain.repositories.TicketRepository;
-import servicio.ticket.domain.services.ITicketCommandService;
+import servicio.katana.aplication.dto.TaskDto;
+import servicio.katana.domain.entities.Task;
+import servicio.katana.domain.repositories.TaskRepository;
+import servicio.katana.domain.services.ITaskCommandService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class TaskCommandServiceImpl implements ITicketCommandService {
+public class TaskCommandServiceImpl implements ITaskCommandService {
 
-    private final TicketRepository ticketRepository;
+    private final TaskRepository taskRepository;
     private final ModelMapper mapper;
 
     @Autowired
-    public TaskCommandServiceImpl(TicketRepository ticketRepository) {
-        this.ticketRepository = ticketRepository;
+    public TaskCommandServiceImpl(TaskRepository task) {
+        this.taskRepository = task;
         mapper = new ModelMapper();
     }
 
     @Override
-    public TicketDto createTicket(TicketDto ticketDto) {
-        ticketDto.setFechaCreacion(LocalDateTime.now());
-        ticketDto.setFechaActualizacion(LocalDateTime.now());
-        Ticket ticket = ticketRepository.saveAndFlush(mapper.map(ticketDto, Ticket.class));
-        ticketDto.setId(ticket.getId());
+    public TaskDto createTask(TaskDto taskDto) {
+        taskDto.setFechaCreacion(LocalDateTime.now());
+        taskDto.setFechaActualizacion(LocalDateTime.now());
+        Task task = taskRepository.saveAndFlush( mapper.map(taskDto, Task.class));
+        taskDto.setId(task.getId());
 
-        return ticketDto;
+        return taskDto;
     }
 
     @Override
-    public Optional<TicketDto> updateTicket(Long id,TicketDto ticketDto) {
-        Optional<Ticket> optionalTicket = ticketRepository.findById(id);
+    public Optional<TaskDto> updateTask(Long id, TaskDto taskDto) {
+        Optional<Task> optionalTicket = taskRepository.findById(id);
         if (optionalTicket.isPresent()) {
-            Ticket existingTicket = optionalTicket.get();
-            existingTicket.setFechaActualizacion(LocalDateTime.now());
-            existingTicket.setUsuario(ticketDto.getUsuario());
-            existingTicket.setEstatus(ticketDto.getEstatus());
-            ticketRepository.saveAndFlush(existingTicket);
+            Task existingTask = optionalTicket.get();
+            existingTask.setFechaActualizacion(LocalDateTime.now());
+            existingTask.setTitle(taskDto.getTitle());
+            existingTask.setDescription(taskDto.getDescription());
+            existingTask.setEstatus(taskDto.getEstatus());
+            taskRepository.saveAndFlush(existingTask);
 
-            return Optional.of(mapper.map(existingTicket, TicketDto.class));
+            return Optional.of(mapper.map(existingTask, TaskDto.class));
         }
 
         return Optional.empty();
     }
 
     @Override
-    public void deleteTicketById(Long id) {
-        Optional<Ticket> optionalTicket = ticketRepository.findById(id);
-        optionalTicket.ifPresent(ticketRepository::delete);
+    public void deleteTaskById(Long id) {
+        Optional<Task> optionalTicket = taskRepository.findById(id);
+        optionalTicket.ifPresent(taskRepository::delete);
     }
 }
