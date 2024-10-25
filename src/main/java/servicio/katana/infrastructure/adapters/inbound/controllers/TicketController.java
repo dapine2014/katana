@@ -26,6 +26,7 @@ public class TicketController {
     private final ITaskDelete taskDeleter;
     private final ITaskRead taskReader;
 
+    @Autowired
     public TicketController(ITaskCreate taskCreator, ITaskUpdate taskUpdater, ITaskDelete taskDeleter, ITaskRead taskReader) {
         this.taskCreator = taskCreator;
         this.taskUpdater = taskUpdater;
