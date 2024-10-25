@@ -57,7 +57,7 @@ class TaskCommandServiceImplTest {
 
         verify(taskRepositoryMock, times(1)).findById(id);
         verify(taskRepositoryMock, times(1)).saveAndFlush(any(Task.class));
-        //Aquí puedes agregar asserts para verificar que los atributos en 'result' sean los esperados
+
     }
 
     @Test
