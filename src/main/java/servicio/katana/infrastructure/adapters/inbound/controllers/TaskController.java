@@ -7,15 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import servicio.katana.aplication.dto.TaskDto;
 import servicio.katana.aplication.ports.inbound.ITaskCreate;
 import servicio.katana.aplication.ports.inbound.ITaskDelete;
@@ -23,10 +15,12 @@ import servicio.katana.aplication.ports.inbound.ITaskUpdate;
 import servicio.katana.aplication.ports.outbound.ITaskRead;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/task")
+@CrossOrigin(origins = "*")
 public class TaskController {
 
     private final ITaskCreate taskCreator;
@@ -80,6 +74,13 @@ public class TaskController {
         return Optional.ofNullable(ticket)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/all")
+    @Operation(summary = "ENPOINT DE CONSULTA DE TODOS LOS TASKS")
+    public ResponseEntity<Object> getAllTasks() {
+        List<TaskDto> tasks = taskReader.findAll();
+        return ResponseEntity.ok(tasks);
     }
 
 }

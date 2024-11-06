@@ -9,6 +9,8 @@ import servicio.katana.aplication.dto.TaskDto;
 import servicio.katana.aplication.ports.outbound.ITaskRead;
 import servicio.katana.domain.services.ITaskEventService;
 
+import java.util.List;
+
 
 @Component
 public class TaskReadUseCase implements ITaskRead {
@@ -29,6 +31,11 @@ public class TaskReadUseCase implements ITaskRead {
     @Override
     public TaskDto findOneById(Long id) {
         return iTaskEventService.findTasksById(id).get();
+    }
+
+    @Override
+    public List<TaskDto> findAll() {
+        return iTaskEventService.findTasks();
     }
 
 }

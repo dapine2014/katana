@@ -3,7 +3,7 @@ package servicio.katana.domain.auxiliary;
 public enum Estatus {
     OPEN,
     STOP,
-    GO,
+    IN_PROGRESS,
     TEST,
     CLOSE
 }

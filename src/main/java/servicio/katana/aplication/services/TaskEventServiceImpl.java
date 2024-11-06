@@ -10,7 +10,9 @@ import servicio.katana.domain.entities.Task;
 import servicio.katana.domain.repositories.TaskRepository;
 import servicio.katana.domain.services.ITaskEventService;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskEventServiceImpl implements ITaskEventService {
@@ -35,6 +37,13 @@ public class TaskEventServiceImpl implements ITaskEventService {
     @Override
     public Optional<TaskDto> findTasksById(Long id) {
         return Optional.of(mapper.map(ticketRepository.findById(id), TaskDto.class));
+    }
+
+    @Override
+    public List<TaskDto> findTasks() {
+        return ticketRepository.findAll().stream()
+                .map(task -> mapper.map(task, TaskDto.class))
+                .collect(Collectors.toList());
     }
 
 }
